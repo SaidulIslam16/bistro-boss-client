@@ -33,22 +33,22 @@ const Menu = () => {
 
             {/* dessert menu items */}
             <MenuCategory
-                title='Dessert' coverImg={dessertImg} subTitle='Lorem Ipsum has been the industry’s standard.'
+                title='dessert' coverImg={dessertImg} subTitle='Lorem Ipsum has been the industry’s standard.'
                 items={desserts}
             ></MenuCategory>
             {/* pizza menu items */}
             <MenuCategory
-                title='Pizza' coverImg={pizzaImg} subTitle='Lorem Ipsum has been the industry’s standard.'
+                title='pizza' coverImg={pizzaImg} subTitle='Lorem Ipsum has been the industry’s standard.'
                 items={pizza}
             ></MenuCategory>
             {/* salad menu items */}
             <MenuCategory
-                title='Salad' coverImg={saladImg} subTitle='Lorem Ipsum has been the industry’s standard.'
+                title='salad' coverImg={saladImg} subTitle='Lorem Ipsum has been the industry’s standard.'
                 items={salad}
             ></MenuCategory>
             {/* soup menu items */}
             <MenuCategory
-                title='Soup' coverImg={soupImg} subTitle='Lorem Ipsum has been the industry’s standard.'
+                title='soup' coverImg={soupImg} subTitle='Lorem Ipsum has been the industry’s standard.'
                 items={soup}
             ></MenuCategory>
         </div>
