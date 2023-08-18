@@ -3,11 +3,11 @@ import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, val
 import { AuthContext } from '../../providers/AuthProvider';
 import { Link } from 'react-router-dom';
 
-const Login = () => {
+const SignUP = () => {
 
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
-    const { loginUser } = useContext(AuthContext);
+    const { createUser } = useContext(AuthContext);
 
     useEffect(() => {
         loadCaptchaEnginge(6);
@@ -17,7 +17,7 @@ const Login = () => {
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
-        loginUser(email, password)
+        createUser(email, password)
             .then(result => {
                 const user = result.user;
                 console.log(user)
@@ -50,15 +50,21 @@ const Login = () => {
                     <form onSubmit={handleLogin} className="card-body">
                         <div className="form-control">
                             <label className="label">
+                                <span className="label-text">Name</span>
+                            </label>
+                            <input type="text" name="name" placeholder="Enter Name" className="input input-bordered" />
+                        </div>
+                        <div className="form-control">
+                            <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
-                            <input type="email" name="email" placeholder="email" className="input input-bordered" />
+                            <input type="email" name="email" placeholder="Enter Email" className="input input-bordered" />
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text">Password</span>
                             </label>
-                            <input type="password" name="password" placeholder="password" className="input input-bordered" />
+                            <input type="password" name="password" placeholder="Enter Password" className="input input-bordered" />
                             <label className="label">
                                 <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                             </label>
@@ -74,7 +80,7 @@ const Login = () => {
                         </div>
                     </form>
                     <div className='text-center pb-5'>
-                        Don't have an Account? <span className='text-yellow-500 font-bold'><Link to='/signup'>SignUp</Link></span>
+                        Already have an Account? <span className='text-yellow-500 font-bold'><Link to='/login'>Login</Link></span>
                     </div>
                 </div>
             </div>
@@ -82,4 +88,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default SignUP;
