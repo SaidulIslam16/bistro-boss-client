@@ -1,10 +1,50 @@
+import { useContext } from "react";
+import { AuthContext } from "../../../providers/AuthProvider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const FoodCard = ({ item }) => {
-
+    const { user } = useContext(AuthContext);
     const { image, name, price, recipe } = item;
+    const navigate = useNavigate();
 
     const handleAddToCart = item => {
         console.log(item);
+        if (user?.email) {
+            fetch('http://localhost:5000/cart', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(item)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.insertedId) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Added to Cart',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                })
+        }
+        else {
+            Swal.fire({
+                title: 'Please Login for Add to Cart?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Please Login!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/login')
+                }
+            })
+        }
     }
 
     return (
