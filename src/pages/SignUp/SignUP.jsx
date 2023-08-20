@@ -8,7 +8,7 @@ import { AuthContext } from '../../providers/AuthProvider';
 
 const SignUP = () => {
 
-    const { createUser } = useContext(AuthContext);
+    const { createUser, updateUserProfile } = useContext(AuthContext);
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -19,6 +19,10 @@ const SignUP = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                updateUserProfile(data.name, data.photoURL)
+                    .then(() => { })
+                    .catch(error => console.log(error))
+
             })
             .catch(error => console.log(error))
     };
@@ -60,6 +64,13 @@ const SignUP = () => {
                                 </label>
                                 <input type="text" {...register("name", { required: true })} name="name" placeholder="Enter Name" className="input input-bordered" />
                                 {errors.name && <span className='text-red-500'>Name is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Photo Url</span>
+                                </label>
+                                <input type="text" {...register("photoURL", { required: true })} placeholder="Enter Photo Url" className="input input-bordered" />
+                                {errors.photoURL && <span className='text-red-500'>Photo Url is required</span>}
                             </div>
                             <div className="form-control">
                                 <label className="label">
