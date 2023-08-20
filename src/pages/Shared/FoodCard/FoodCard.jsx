@@ -1,26 +1,31 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../providers/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import useCart from "../../../hooks/useCart";
 
 const FoodCard = ({ item }) => {
     const { user } = useContext(AuthContext);
-    const { image, name, price, recipe } = item;
+    const { image, name, price, recipe, _id, category } = item;
     const navigate = useNavigate();
+    const [, refetch] = useCart();
+    const locatoin = useLocation();
 
     const handleAddToCart = item => {
         console.log(item);
         if (user?.email) {
+            const cartItem = { menutItemID: _id, name, category, price, image, recipe, email: user.email }
             fetch('http://localhost:5000/cart', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
                 },
-                body: JSON.stringify(item)
+                body: JSON.stringify(cartItem)
             })
                 .then(res => res.json())
                 .then(data => {
                     if (data.insertedId) {
+                        refetch(); //refetch cart to update the cart in client side.
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -41,7 +46,7 @@ const FoodCard = ({ item }) => {
                 confirmButtonText: 'Please Login!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    navigate('/login')
+                    navigate('/login', { state: { from: locatoin } })
                 }
             })
         }
