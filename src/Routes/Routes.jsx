@@ -6,6 +6,8 @@ import OrderFood from "../pages/OrderFood/OrderFood/OrderFood";
 import Login from "../pages/Login/Login";
 import SignUP from "../pages/SignUp/SignUP";
 import PrivateRoutes from "./PrivateRoutes";
+import Dashboard from "../Layout/Dashboard";
+import MyCart from "../pages/Dashboard/MyCart/MyCart";
 
 export const router = createBrowserRouter([
     {
@@ -35,6 +37,16 @@ export const router = createBrowserRouter([
             {
                 path: '/secrect',
                 element: <PrivateRoutes><p>This is Secrect</p></PrivateRoutes>
+            }
+        ]
+    },
+    {
+        path: 'dashboard',
+        element: <Dashboard></Dashboard>,
+        children: [
+            {
+                path: 'mycart',
+                element: <MyCart></MyCart>
             }
         ]
     }
