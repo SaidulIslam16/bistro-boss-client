@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../providers/AuthProvider';
 import Swal from 'sweetalert2';
+import SocialLogin from '../Shared/SocialLogin/SocialLogin';
 
 
 const SignUP = () => {
@@ -128,6 +129,7 @@ const SignUP = () => {
                         <div className='text-center pb-5'>
                             Already have an Account? <span className='text-yellow-500 font-bold'><Link to='/login'>Login</Link></span>
                         </div>
+                        <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>
