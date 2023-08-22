@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { FaGoogle } from "react-icons/fa";
 import { AuthContext } from "../../../providers/AuthProvider";
 import { useLocation, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 
 
 const SocialLogin = () => {
@@ -26,7 +25,7 @@ const SocialLogin = () => {
                     body: JSON.stringify(userInfo)
                 })
                     .then(res => res.json())
-                    .then(data => {
+                    .then(() => {
 
                         navigate(from, { replace: true });
                     })

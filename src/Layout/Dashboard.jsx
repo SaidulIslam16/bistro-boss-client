@@ -1,11 +1,14 @@
 import { Helmet } from "react-helmet-async";
-import { FaShoppingCart, FaWallet, FaCalendarAlt, FaHome, FaList, FaEnvelope } from "react-icons/fa";
+import { FaShoppingCart, FaWallet, FaCalendarAlt, FaHome, FaList, FaEnvelope, FaUtensilSpoon, FaBook, FaUsers } from "react-icons/fa";
 import { Link, Outlet } from "react-router-dom";
 import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
 
     const [cart] = useCart();
+
+    // TODO: load data from the server to have dynamic user check isAdmin=true or false;
+    const isAdmin = true;
 
     return (
 
@@ -24,10 +27,20 @@ const Dashboard = () => {
                 <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
                 <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
                     {/* Sidebar content here */}
-                    <li><Link to='/dashboard/home'><FaHome /> Dashboard</Link></li>
-                    <li><Link to='/dashboard/mycart'><FaShoppingCart /> My Cart <span className="badge badge-secondary">+{cart?.length || 0}</span></Link></li>
-                    <li><Link to='/dashboard/history'><FaWallet /> Payment History</Link></li>
-                    <li><Link to='/dashboard/reservation'><FaCalendarAlt /> Reservation</Link></li>
+                    {
+                        isAdmin ? <>
+                            <li><Link to='/dashboard/home'><FaHome /> Admin Home</Link></li>
+                            <li><Link to='/dashboard/reservation'> <FaUtensilSpoon /> Add Item</Link></li>
+                            <li><Link to='/dashboard/history'><FaList /> Manage Items</Link></li>
+                            <li><Link to='/dashboard/mycart'><FaBook /> Manage Bookings </Link></li>
+                            <li><Link to='/dashboard/allusers'><FaUsers /> All Users </Link></li>
+                        </> : <>
+                            <li><Link to='/dashboard/home'><FaHome /> User Home</Link></li>
+                            <li><Link to='/dashboard/mycart'><FaShoppingCart /> My Cart <span className="badge badge-secondary">+{cart?.length || 0}</span></Link></li>
+                            <li><Link to='/dashboard/history'><FaWallet /> Payment History</Link></li>
+                            <li><Link to='/dashboard/reservation'><FaCalendarAlt /> Reservation</Link></li>
+                        </>
+                    }
                     <div className="divider"></div>
                     <li><Link to='/'><FaHome /> Home</Link></li>
                     <li><Link to='/menu'><FaList /> Menu</Link></li>
