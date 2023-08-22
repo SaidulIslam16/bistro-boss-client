@@ -1,26 +1,50 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 import { AuthContext } from '../../providers/AuthProvider';
+import Swal from 'sweetalert2';
 
 
 const SignUP = () => {
 
-    const { createUser, updateUserProfile } = useContext(AuthContext);
+    const { createUser, userProfileUpdate } = useContext(AuthContext);
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
 
     const onSubmit = data => {
         console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
-                updateUserProfile(data.name, data.photoURL)
-                    .then(() => { })
+                userProfileUpdate(data.name, data.photoURL)
+                    .then(() => {
+                        const userInfo = { name: data.name, email: data.email }
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(userInfo)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data)
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'User Created Successfully',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                navigate('/');
+                            })
+
+
+                    })
                     .catch(error => console.log(error))
 
             })
@@ -95,10 +119,10 @@ const SignUP = () => {
                                 <label className="label">
                                     <LoadCanvasTemplate />
                                 </label>
-                                <input onMouseOut={handleValidateCaptcha} ref={captchaRef} type="text" name="captcha" placeholder="Enter Captcha Here" className="input input-bordered" />
+                                <input onBlur={handleValidateCaptcha} ref={captchaRef} type="text" name="captcha" placeholder="Enter Captcha Here" className="input input-bordered" />
                             </div>
                             <div className="form-control mt-6">
-                                <input disabled={disabled} className="btn btn-primary" type="submit" value="Signup" />
+                                <input disabled={false} className="btn btn-primary" type="submit" value="Signup" />
                             </div>
                         </form>
                         <div className='text-center pb-5'>
