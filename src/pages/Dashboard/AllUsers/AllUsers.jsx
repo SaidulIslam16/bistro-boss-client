@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import { FaTrash, FaUserShield } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 
 const AllUsers = () => {
@@ -12,6 +13,25 @@ const AllUsers = () => {
 
     const handdleDelete = () => {
 
+    }
+
+    const handdleMakeAdmin = user => {
+        fetch(`http://localhost:5000/users/admin/${user._id}`, {
+            method: 'PATCH',
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: `${user.name} is a Admin Now`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            })
     }
 
     return (
@@ -37,7 +57,7 @@ const AllUsers = () => {
                             <th>{index + 1}</th>
                             <td>{user.name}</td>
                             <td>{user.email}</td>
-                            <td>{user.role === 'admin' ? 'Adming' : <button className="btn btn-ghost bg-yellow-500 text-white hover:bg-yellow-600"><FaUserShield /></button>}</td>
+                            <td>{user.role === 'admin' ? <button className="btn btn-xs btn-primary">Admin</button> : <button onClick={() => handdleMakeAdmin(user)} className="btn btn-ghost bg-yellow-500 text-white hover:bg-yellow-600"><FaUserShield /></button>}</td>
                             <td><button onClick={() => handdleDelete(user)} className="btn btn-ghost bg-red-600 text-white hover:bg-red-700"><FaTrash /></button></td>
                         </tr>)}
 
