@@ -1,13 +1,12 @@
 // useAxiosSecure.js
-import { useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Use useNavigate for routing
-import { AuthContext } from '../providers/AuthProvider';
+import useAuth from './useAuth';
 
 
 const useAxiosSecure = () => {
     const navigate = useNavigate(); // Use useNavigate for navigation
-    const { logoutUser } = useContext(AuthContext); // Import and use your AuthContext
+    const { logoutUser } = useAuth(); // Import and use your AuthContext
 
     const axiosSecure = axios.create({
         baseURL: 'http://localhost:5000',

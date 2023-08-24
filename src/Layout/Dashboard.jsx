@@ -10,8 +10,7 @@ const Dashboard = () => {
 
     // TODO: load data from the server to have dynamic user check isAdmin=true or false;
     // const isAdmin = true;
-    const [data] = useAdmin();
-    console.log(data);
+    const [isAdmin] = useAdmin();
 
     return (
 
@@ -31,7 +30,7 @@ const Dashboard = () => {
                 <ul className="menu p-4 w-80 h-full bg-base-200 text-base-content">
                     {/* Sidebar content here */}
                     {
-                        data ? <>
+                        isAdmin ? <>
                             <li><Link to='/dashboard/home'><FaHome /> Admin Home</Link></li>
                             <li><Link to='/dashboard/reservation'> <FaUtensilSpoon /> Add Item</Link></li>
                             <li><Link to='/dashboard/history'><FaList /> Manage Items</Link></li>
