@@ -32,7 +32,7 @@ const Dashboard = () => {
                     {
                         isAdmin ? <>
                             <li><Link to='/dashboard/home'><FaHome /> Admin Home</Link></li>
-                            <li><Link to='/dashboard/reservation'> <FaUtensilSpoon /> Add Item</Link></li>
+                            <li><Link to='/dashboard/additem'> <FaUtensilSpoon /> Add Item</Link></li>
                             <li><Link to='/dashboard/history'><FaList /> Manage Items</Link></li>
                             <li><Link to='/dashboard/mycart'><FaBook /> Manage Bookings </Link></li>
                             <li><Link to='/dashboard/allusers'><FaUsers /> All Users </Link></li>
