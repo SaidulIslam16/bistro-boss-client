@@ -63,8 +63,6 @@ const AllUsers = () => {
                             <td>{user.role === 'admin' ? <button className="btn btn-xs btn-primary">Admin</button> : <button onClick={() => handdleMakeAdmin(user)} className="btn btn-ghost bg-yellow-500 text-white hover:bg-yellow-600"><FaUserShield /></button>}</td>
                             <td><button onClick={() => handdleDelete(user)} className="btn btn-ghost bg-red-600 text-white hover:bg-red-700"><FaTrash /></button></td>
                         </tr>)}
-
-
                     </tbody>
                 </table>
             </div>
