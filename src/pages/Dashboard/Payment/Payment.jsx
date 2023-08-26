@@ -19,7 +19,7 @@ const Payment = () => {
             <SectionTitle subHeading='Please Process the' heading="Payment"></SectionTitle>
             <h3>Onek Takar Bepar Separ</h3>
             <Elements stripe={stripePromise}>
-                <CheckoutForm price={totalPrice} />
+                <CheckoutForm cart={cart} price={totalPrice} />
             </Elements>
         </div>
     );

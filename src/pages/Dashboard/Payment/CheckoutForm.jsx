@@ -4,7 +4,7 @@ import { useState } from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAuth from "../../../hooks/useAuth";
 
-const CheckoutForm = ({ price }) => {
+const CheckoutForm = ({ price, cart }) => {
     const stripe = useStripe();
     const elements = useElements();
     const { user } = useAuth();
@@ -15,11 +15,13 @@ const CheckoutForm = ({ price }) => {
     const [transactionId, setTransactionId] = useState('')
 
     useEffect(() => {
-        axiosSecure.post('/create-payment-intent', { price })
-            .then(res => {
-                console.log(res);
-                setClientSecret(res.data.clientSecret);
-            })
+        if (price > 0) {
+            axiosSecure.post('/create-payment-intent', { price })
+                .then(res => {
+                    console.log(res);
+                    setClientSecret(res.data.clientSecret);
+                })
+        }
     }, [])
 
     const handleSubmit = async (event) => {
@@ -36,7 +38,7 @@ const CheckoutForm = ({ price }) => {
             return;
         }
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const { error } = await stripe.createPaymentMethod({
             type: 'card',
             card
         })
@@ -71,6 +73,23 @@ const CheckoutForm = ({ price }) => {
         if (paymentIntent.status === "succeeded") {
             const transactionId = paymentIntent.id;
             setTransactionId(transactionId);
+            // Save payment information to the server.
+            const payment = {
+                email: user?.email,
+                transactionId,
+                price,
+                quantity: cart.length,
+                date: new Date(),
+                status: 'service pending',
+                cartItems: cart.map(item => item._id),
+                menuItems: cart.map(item => item.menutItemID),
+                itemNames: cart.map(item => item.name)
+            }
+
+            axiosSecure.post('/payments', payment)
+                .then(res => {
+                    console.log(res.data);
+                })
         }
     }
 
