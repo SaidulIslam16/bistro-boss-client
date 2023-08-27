@@ -31,13 +31,15 @@ const Dashboard = () => {
                     {/* Sidebar content here */}
                     {
                         isAdmin ? <>
-                            <li><Link to='/dashboard/home'><FaHome /> Admin Home</Link></li>
+                            {/* Adming Dashboard */}
+                            <li><Link to='/dashboard/adminhome'><FaHome /> Admin Home</Link></li>
                             <li><Link to='/dashboard/additem'> <FaUtensilSpoon /> Add Item</Link></li>
                             <li><Link to='/dashboard/manageitems'><FaList /> Manage Items</Link></li>
                             <li><Link to='/dashboard/mycart'><FaBook /> Manage Bookings </Link></li>
                             <li><Link to='/dashboard/allusers'><FaUsers /> All Users </Link></li>
                         </> : <>
-                            <li><Link to='/dashboard/home'><FaHome /> User Home</Link></li>
+                            {/* User Dashboard */}
+                            <li><Link to='/dashboard/userhome'><FaHome /> User Home</Link></li>
                             <li><Link to='/dashboard/mycart'><FaShoppingCart /> My Cart <span className="badge badge-secondary">+{cart?.length || 0}</span></Link></li>
                             <li><Link to='/dashboard/history'><FaWallet /> Payment History</Link></li>
                             <li><Link to='/dashboard/reservation'><FaCalendarAlt /> Reservation</Link></li>
