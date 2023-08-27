@@ -24,7 +24,7 @@ const SignUP = () => {
                 userProfileUpdate(data.name, data.photoURL)
                     .then(() => {
                         const userInfo = { name: data.name, email: data.email }
-                        fetch('http://localhost:5000/users', {
+                        fetch('https://bistro-boss-server-pi-pied.vercel.app/users', {
                             method: 'POST',
                             headers: {
                                 'content-type': 'application/json'

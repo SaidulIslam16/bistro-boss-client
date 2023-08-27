@@ -9,7 +9,7 @@ const useAxiosSecure = () => {
     const { logoutUser } = useAuth(); // Import and use your AuthContext
 
     const axiosSecure = axios.create({
-        baseURL: 'http://localhost:5000',
+        baseURL: 'https://bistro-boss-server-pi-pied.vercel.app',
     });
 
     axiosSecure.interceptors.request.use(async (config) => {
